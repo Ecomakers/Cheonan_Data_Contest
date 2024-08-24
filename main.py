@@ -151,15 +151,16 @@ def main():
         compare_option = st.selectbox('비교할 지역을 선택해주세요', op2)
 
         compare_data = gdf[gdf['EMD_KOR_NM'] == compare_option]
-        compare_avg = compare_data.groupby(['EMD_KOR_NM'])[compare_data.columns[3:-1]].mean().reset_index() if not compare_data.empty else pd.DataFrame()
+        numeric_cols = filtered_data.select_dtypes(include=[np.number]).columns[:-1]
+        compare_avg = compare_data.groupby(['EMD_KOR_NM'])[numeric_cols].mean(numeric_only=True).reset_index() if not compare_data.empty else pd.DataFrame()
 
         if selected_option == '전체':
-            df = pd.DataFrame(filtered_data.mean()).T
+            df = pd.DataFrame(filtered_data[numeric_cols].mean(numeric_only=True)).T
             df['EMD_KOR_NM'] = '전체'
             selected_avg = df[['EMD_KOR_NM', '총인구', '유소년(청소년)인구비율', '교통cctv', '방범cctv', '보안등', '가로등', '공원', '산책로',
                                '반려견_동반문화시설', '학원_교습소', '아파트밀도', '학교', '상가밀도', '주점', 'y']]
         else:
-            selected_avg = filtered_data.groupby(['EMD_KOR_NM'])[filtered_data.columns[3:-1]].mean().reset_index() if not filtered_data.empty else pd.DataFrame()
+            selected_avg = filtered_data.groupby(['EMD_KOR_NM'])[numeric_cols].mean(numeric_only=True).reset_index() if not filtered_data.empty else pd.DataFrame()
 
         total_df = pd.concat([selected_avg, compare_avg])
         total_df.rename(columns={'y':'산책지수'}, inplace=True)
