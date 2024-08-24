@@ -1,5 +1,5 @@
 geopandas
 plotly
-streamli
+streamlit
 panda
 numpy
