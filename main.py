@@ -151,7 +151,7 @@ def main():
         compare_option = st.selectbox('비교할 지역을 선택해주세요', op2)
 
         compare_data = gdf[gdf['EMD_KOR_NM'] == compare_option]
-        compare_avg = compare_data.groupby(['EMD_KOR_NM'])[filtered_data.columns[3:-1]].mean().reset_index() if not compare_data.empty else pd.DataFrame()
+        compare_avg = compare_data.groupby(['EMD_KOR_NM'])[compare_data.columns[3:-1]].mean().reset_index() if not compare_data.empty else pd.DataFrame()
 
         if selected_option == '전체':
             df = pd.DataFrame(filtered_data.mean()).T
