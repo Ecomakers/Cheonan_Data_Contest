@@ -75,7 +75,8 @@ def main():
                 center={"lat": center_lat, "lon": center_lon}, 
                 opacity=0.5,
                 labels={'y':'산책지수'},
-                hover_name='EMD_KOR_NM'
+                hover_name='EMD_KOR_NM',
+                height = 550
             )
     
             # EMD_KOR_NM 별로 그룹화하여 격자 연결
@@ -132,6 +133,7 @@ def main():
             color='항목',
             mapbox_style="carto-positron",
             zoom=zoom_size,
+            height = 550,
             center={"lat": center_lat, "lon": center_lon}
         )
 
